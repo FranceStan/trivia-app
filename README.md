@@ -14,6 +14,7 @@ Ce projet est une application complète utilisant AWS pour l'infrastructure back
 - Git + GitHub
 - React.js (frontend)
 - Node.js v16 (via NVM)
+- AWS CodeBuild
 
 ## 🚀 Étapes de déploiement
 
@@ -51,6 +52,33 @@ aws s3 sync --acl public-read build s3://<bucket-unique>/
 ```
 https://<bucket-unique>.s3.amazonaws.com/index.html
 ```
+
+## 🧪 Tests automatisés avec AWS CodeBuild
+
+Ce projet inclut un fichier `buildspecs/unittests.yaml` permettant d'exécuter des tests unitaires dans AWS CodeBuild :
+
+- Analyse statique avec `pylint`
+- Tests unitaires avec `pytest`
+- Génération de rapports de tests et de couverture
+
+### 📦 Créer le projet CodeBuild
+
+1. Aller dans la console AWS > CodeBuild
+2. Créer un nouveau projet avec ces paramètres :
+
+| Paramètre                   | Valeur                             |
+|----------------------------|------------------------------------|
+| Nom du projet              | trivia-unittests                   |
+| Source                     | GitHub (`FranceStan/trivia-app`)   |
+| Branche                    | main                               |
+| Système d'exploitation     | Ubuntu                             |
+| Image                      | aws/codebuild/standard:5.0         |
+| Fichier buildspec          | buildspecs/unittests.yaml          |
+
+3. Lancer la build manuellement
+4. Visualiser les journaux et les rapports
+
+Les résultats apparaîtront dans l’onglet **Rapports** avec le taux de couverture du code et les résultats des tests.
 
 ## 🧹 Nettoyage des ressources
 
